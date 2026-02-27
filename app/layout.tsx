@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -13,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Accessability — Navigation for Everyone",
+  title: "Accessibility — Navigation for Everyone",
   description: "Accessible navigation and routing for people with disabilities",
 };
 
@@ -27,7 +30,16 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        {/* GLOBAL HEADER */}
+        <Header />
+
+        {/* PAGE CONTENT */}
+        <main className="min-h-screen">
+          {children}
+        </main>
+
+        {/* GLOBAL FOOTER */}
+        <Footer />
       </body>
     </html>
   );
