@@ -1,26 +1,61 @@
+/* app/globals.css */
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* --- Make dark: respond to the html .dark class as well as prefers-color-scheme --- */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* --- Define your design tokens as theme variables --- */
+@theme {
+  /* Colors - these become utilities like bg-primary, text-text-muted, etc. */
+  --color-primary: #6750A4;
+  --color-background-light: #f6f7f8;
+  --color-background-dark: #101922;
+  --color-text-main: #111418;
+  --color-text-muted: #637588;
+
+  /* Fonts - creates utilities like font-display, font-sans */
+  --font-display: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Arial", sans-serif;
+  --font-sans: var(--font-display);
+
+  /* (optional) radii — these create rounded-<name> utilities if you want them */
+  --radius-default: 0.25rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem;
+  --radius-full: 9999px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* --- Override theme variables for dark mode using the theme cascade layer --- */
+@layer theme {
+  .dark {
+    --color-background-light: var(--color-background-dark); /* your bg variable for dark */
+    --color-text-main: #e6eef6;
+    --color-text-muted: #9aa9b4;
+    /* override other colors if desired */
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* --- Optional: always generate variables (static) if you prefer (uncomment) --- */
+/* @theme static { --color-primary: #6750A4; --color-background-light: #f6f7f8; } */
+
+/* --- Base / utility fallbacks & small helpers --- */
+@layer base {
+  html, body, #__next {
+    height: 100%;
+  }
+
+  body {
+    font-family: var(--font-display);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* Use the theme-driven utilities (Tailwind creates them) */
+  }
+
+  /* Material Symbols helper if you use the icon font */
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400;
+    font-family: "Material Symbols Outlined", var(--font-display);
+  }
 }
+
+/* Keep any custom styles / helpers below */
