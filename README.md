@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AccessAbility 🌐📱
 
-## Getting Started
+Welcome to the **AccessAbility Showcase Website**! This repository is dedicated to presenting our mobile app, **AccessAbility**, designed to make navigation in Dagupan easier and more inclusive for Persons with Disabilities (PWDs).  
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🚀 About AccessAbility
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**AccessAbility** is a GPS-based mobile application that empowers PWDs to navigate Dagupan with ease. By combining real-time GPS tracking with accessibility-focused features, the app enhances independence and mobility for users.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Key features:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- 📍 **Real-Time GPS Tracking:** Know your exact location and navigate safely.
+- 🔔 **Proximity Alerts:** Receive notifications near accessible facilities.
+- 🏢 **PWD-Friendly Establishments:** Find restaurants, shops, and public places that are accessibility-friendly.
+- ♿ **Accessibility Features:** Tools to improve mobility and independence.
+- 🌟 **User-Friendly Interface:** Simple and intuitive design for everyone.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 💻 Showcase Website
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+This repository hosts the **website version** of AccessAbility, designed to:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Demonstrate the app’s features and functionality  
+- Provide information about accessibility solutions in Dagupan  
+- Offer download links or guides to the mobile app  
 
-## Deploy on Vercel
+The **mobile app itself** is in a separate repository: [AccessAbility Mobile App](#) (replace `#` with your repo link).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🛠 Technologies Used
+
+- **Next.js 16** – React framework for fast, server-side rendering  
+- **Tailwind CSS** – Utility-first styling framework for responsive design  
+- JavaScript, HTML5, CSS3  
+
+---
+
+## ⚡ Running Locally
+
+To run the showcase website on your machine:
+
+1. Clone the repository:  
+   ```bash
+   git clone https://github.com/lancekian12/Accessability-Web
+   cd accessability-website
+2. Install dependencies:
+   ```
+   npm install
+3. Start the development server:
+   ```
+   npm run dev
+4.  Open your browser and go to the address shown in the terminal (usually http://localhost:3000) to view the website.
+
+## 🙌 Contributing
+
+We welcome contributions! You can improve the website design, add new features, or suggest accessibility enhancements. Feel free to create a pull request.  
+
+## 📄 License
+
+This project is licensed under the MIT License.  
+
+## 💡 Learn More
+
+For the mobile app, visit the repository: [AccessAbility Mobile App](https://github.com/Arthritisboy/3Y2AAPWD)  
+
+Together, we can make Dagupan a more accessible city for everyone! ♿🌟
