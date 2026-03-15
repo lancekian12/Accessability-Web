@@ -23,8 +23,11 @@ import {
 /**
  * HeroSection (unchanged design)
  *
- * Android button now downloads the APK directly from:
+ * Both iOS and Android buttons now download the same APK directly:
  * https://github.com/Montilla007/3Y2AAPWD/releases/latest/download/app-release.apk
+ *
+ * (You asked for identical behavior — note iOS devices won't be able to install APKs,
+ * but this will trigger the APK download in the browser just like Android.)
  */
 
 const HeroSection: React.FC = () => {
@@ -33,7 +36,7 @@ const HeroSection: React.FC = () => {
   const repo = "3Y2AAPWD";
   const branch = "main"; // change if your default branch name differs
 
-  // Direct repo zip
+  // Direct repo zip (kept for reference, not used for iOS anymore)
   const repoZipUrl = `https://github.com/${owner}/${repo}/archive/refs/heads/${branch}.zip`;
 
   // Direct APK link (as you requested)
@@ -71,10 +74,10 @@ const HeroSection: React.FC = () => {
     triggerDownload(apkUrl, "app-release.apk");
   };
 
-  // iOS: download the repo ZIP (iOS cannot install APKs)
+  // iOS: now also downloads the same APK (per your request)
   const handleIOS = (e?: React.MouseEvent) => {
     if (e) e.preventDefault();
-    triggerDownload(repoZipUrl, `${repo}.zip`);
+    triggerDownload(apkUrl, "app-release.apk");
   };
 
   return (
@@ -123,7 +126,7 @@ const HeroSection: React.FC = () => {
             </h2>
 
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              {/* iOS button: downloads repo zip (iOS can't install APKs) */}
+              {/* iOS button: now downloads the APK (same as Android) */}
               <button
                 onClick={handleIOS}
                 className="flex cursor-pointer items-center justify-center rounded-xl h-14 px-8 bg-primary text-white text-base font-bold hover:bg-primary/90 transition-all shadow-map-float hover:-translate-y-1"

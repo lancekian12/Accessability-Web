@@ -5,6 +5,35 @@ import Image from "next/image";
 import { Satellite, Navigation2 } from "lucide-react";
 
 const Header: React.FC = () => {
+  const apkUrl =
+    "https://github.com/Montilla007/3Y2AAPWD/releases/latest/download/app-release.apk";
+
+  // Utility to trigger download/navigation
+  const triggerDownload = (url: string, suggestedFilename?: string) => {
+    try {
+      const a = document.createElement("a");
+      a.href = url;
+      if (suggestedFilename) {
+        a.setAttribute("download", suggestedFilename);
+      }
+      a.setAttribute("rel", "noopener noreferrer");
+      a.style.display = "none";
+      document.body.appendChild(a);
+
+      const evt = new MouseEvent("click");
+      a.dispatchEvent(evt);
+
+      document.body.removeChild(a);
+    } catch (e) {
+      window.location.href = url;
+    }
+  };
+
+  const handleStartRoute = (e?: React.MouseEvent) => {
+    if (e) e.preventDefault();
+    triggerDownload(apkUrl, "app-release.apk");
+  };
+
   return (
     <header className="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 px-6 py-4 lg:px-20 bg-white/90 backdrop-blur-md sticky top-0 z-50">
       <div className="flex items-center gap-3 text-text-main">
@@ -13,7 +42,7 @@ const Header: React.FC = () => {
           <Image
             src="/accessabilitylogo.png"
             alt="Accessibility Logo"
-            width={24} // adjust size to match icon
+            width={24}
             height={24}
             className="object-contain"
           />
@@ -30,7 +59,10 @@ const Header: React.FC = () => {
       </div>
 
       <div className="flex items-center gap-6">
-        <button className="flex cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-6 bg-primary text-white text-sm font-bold shadow-md shadow-primary/20 hover:bg-primary/90 hover:shadow-lg transition-all border-b-2 border-primary/50 active:border-b-0 active:translate-y-[2px]">
+        <button
+          onClick={handleStartRoute}
+          className="flex cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-6 bg-primary text-white text-sm font-bold shadow-md shadow-primary/20 hover:bg-primary/90 hover:shadow-lg transition-all border-b-2 border-primary/50 active:border-b-0 active:translate-y-[2px]"
+        >
           <span className="truncate">Start Route</span>
         </button>
 
