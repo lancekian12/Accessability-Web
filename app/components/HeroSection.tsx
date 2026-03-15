@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import {
   Satellite,
   Map,
@@ -19,19 +20,110 @@ import {
   Mic,
 } from "lucide-react";
 
-const HeroSection = () => {
+/**
+ * HeroSection (unchanged design)
+ *
+ * - The only changes are the two buttons:
+ *   - "Download on iOS" -> downloads the repository ZIP (branch: main)
+ *   - "Get for Android" -> attempts to download an APK from Releases, falls back to repo ZIP if APK not available
+ *
+ * Notes:
+ * - Browser CORS may prevent a HEAD check from succeeding on some hosts. In that case, the code will fall back to the ZIP automatically.
+ * - If you upload an APK as a release asset, name it `app.apk` (or change `apkUrl` below to the actual asset name).
+ */
+
+const HeroSection: React.FC = () => {
+  // Repo & release URLs
+  const owner = "lancekian12";
+  const repo = "3Y2AAPWD";
+  const branch = "main"; // change if your default branch name differs
+
+  // Direct repo zip
+  const repoZipUrl = `https://github.com/${owner}/${repo}/archive/refs/heads/${branch}.zip`;
+
+  // Release APK (expected release asset name: app.apk). Change if different.
+  const apkUrl = `https://github.com/${owner}/${repo}/releases/latest/download/app.apk`;
+
+  // Utility to trigger download/navigation
+  const triggerDownload = (url: string, suggestedFilename?: string) => {
+    try {
+      const a = document.createElement("a");
+      a.href = url;
+      if (suggestedFilename) {
+        // download attribute is a suggestion and may be ignored for cross-origin
+        a.setAttribute("download", suggestedFilename);
+      }
+      // ensure safe behavior for cross-origin
+      a.setAttribute("rel", "noopener noreferrer");
+      a.style.display = "none";
+      document.body.appendChild(a);
+
+      // For some browsers, using click() is enough; using MouseEvent to be safe.
+      const evt = new MouseEvent("click");
+      a.dispatchEvent(evt);
+
+      document.body.removeChild(a);
+    } catch (e) {
+      // Fallback: navigate directly
+      window.location.href = url;
+    }
+  };
+
+  /**
+   * Android download flow:
+   * 1. Try to check if APK asset exists using a HEAD request.
+   *    - If HEAD succeeds (status 200), trigger download of APK.
+   *    - If HEAD fails (404, network error, CORS error), fall back to downloading repo ZIP.
+   *
+   * Note: HEAD may fail due to CORS; that's handled by the catch which falls back to ZIP.
+   */
+  const handleAndroid = async (e?: React.MouseEvent) => {
+    if (e) e.preventDefault();
+
+    // Quick UX: try HEAD first to avoid downloading HTML pages by mistake.
+    try {
+      // Use fetch HEAD to check resource exists. This can throw due to CORS.
+      const resp = await fetch(apkUrl, {
+        method: "HEAD",
+        mode: "cors",
+        cache: "no-store",
+      });
+
+      // If status in 200..399, assume APK is available
+      if (resp.ok) {
+        // Trigger APK download
+        triggerDownload(apkUrl, `${repo}.apk`);
+        return;
+      } else {
+        // Not OK (404 etc.) -> fallback
+        triggerDownload(repoZipUrl, `${repo}.zip`);
+        return;
+      }
+    } catch (err) {
+      // Network/CORS/error -> fallback to repo zip
+      // (This is common when HEAD is blocked by CORS; fallback is safe)
+      triggerDownload(repoZipUrl, `${repo}.zip`);
+    }
+  };
+
+  // iOS: download the repo ZIP (iOS cannot install APKs)
+  const handleIOS = (e?: React.MouseEvent) => {
+    if (e) e.preventDefault();
+    triggerDownload(repoZipUrl, `${repo}.zip`);
+  };
+
   return (
     <section className="relative overflow-hidden pt-12 pb-20 lg:pt-24 lg:pb-32 px-6 lg:px-20 bg-white">
-<div
-  className="absolute inset-x-0 top-0 bottom-[-200px] pointer-events-none opacity-30"
-  style={{
-    backgroundImage: `
+      <div
+        className="absolute inset-x-0 top-0 bottom-[-200px] pointer-events-none opacity-30"
+        style={{
+          backgroundImage: `
       linear-gradient(to right, #e5e7eb 1px, transparent 1px),
       linear-gradient(to bottom, #e5e7eb 1px, transparent 1px)
     `,
-    backgroundSize: "40px 40px",
-  }}
-/>
+          backgroundSize: "40px 40px",
+        }}
+      />
 
       {/* Gradient Fade Overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/60 to-white pointer-events-none" />
@@ -66,14 +158,22 @@ const HeroSection = () => {
             </h2>
 
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <button className="flex cursor-pointer items-center justify-center rounded-xl h-14 px-8 bg-primary text-white text-base font-bold hover:bg-primary/90 transition-all shadow-map-float hover:-translate-y-1">
+              {/* iOS button: downloads repo zip (iOS can't install APKs) */}
+              <button
+                onClick={handleIOS}
+                className="flex cursor-pointer items-center justify-center rounded-xl h-14 px-8 bg-primary text-white text-base font-bold hover:bg-primary/90 transition-all shadow-map-float hover:-translate-y-1"
+              >
                 <span className="mr-2">
                   <Map className="w-5 h-5" />
                 </span>
                 Download on iOS
               </button>
 
-              <button className="flex cursor-pointer items-center justify-center rounded-xl h-14 px-8 bg-white text-text-main border border-slate-200 text-base font-bold hover:bg-slate-50 transition-all hover:border-slate-300 shadow-map-card">
+              {/* Android button: tries APK -> falls back to zip */}
+              <button
+                onClick={handleAndroid}
+                className="flex cursor-pointer items-center justify-center rounded-xl h-14 px-8 bg-white text-text-main border border-slate-200 text-base font-bold hover:bg-slate-50 transition-all hover:border-slate-300 shadow-map-card"
+              >
                 <span className="mr-2">
                   <Zap className="w-5 h-5" />
                 </span>
@@ -297,7 +397,7 @@ const HeroSection = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> 
     </section>
   );
 };

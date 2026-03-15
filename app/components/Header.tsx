@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import { MapPin, Satellite, Navigation2, Map } from "lucide-react";
+import { Satellite, Navigation2 } from "lucide-react";
 
 const Header: React.FC = () => {
   return (
