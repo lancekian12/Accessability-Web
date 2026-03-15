@@ -12,7 +12,7 @@ const Footer: React.FC = () => {
           <span>© 2024 AccessMap Inc.</span>
         </div>
 
-        <div className="flex gap-6">
+        {/* <div className="flex gap-6">
           <a className="text-text-muted hover:text-primary transition-colors text-sm font-medium" href="#">
             Accessibility Statement
           </a>
@@ -22,7 +22,7 @@ const Footer: React.FC = () => {
           <a className="text-text-muted hover:text-primary transition-colors text-sm font-medium" href="#">
             Contact Support
           </a>
-        </div>
+        </div> */}
 
         <div className="hidden md:flex items-center gap-4 text-sm text-text-muted">
           <CheckCircle2 className="w-4 h-4 text-green-600" />

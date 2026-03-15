@@ -7,14 +7,16 @@
 /* --- Define your design tokens as theme variables --- */
 @theme {
   /* Colors - these become utilities like bg-primary, text-text-muted, etc. */
-  --color-primary: #6750A4;
+  --color-primary: #6750a4;
   --color-background-light: #f6f7f8;
   --color-background-dark: #101922;
   --color-text-main: #111418;
   --color-text-muted: #637588;
 
   /* Fonts - creates utilities like font-display, font-sans */
-  --font-display: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Arial", sans-serif;
+  --font-display:
+    Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+    "Arial", sans-serif;
   --font-sans: var(--font-display);
 
   /* (optional) radii — these create rounded-<name> utilities if you want them */
@@ -28,7 +30,9 @@
 /* --- Override theme variables for dark mode using the theme cascade layer --- */
 @layer theme {
   .dark {
-    --color-background-light: var(--color-background-dark); /* your bg variable for dark */
+    --color-background-light: var(
+      --color-background-dark
+    ); /* your bg variable for dark */
     --color-text-main: #e6eef6;
     --color-text-muted: #9aa9b4;
     /* override other colors if desired */
@@ -40,7 +44,9 @@
 
 /* --- Base / utility fallbacks & small helpers --- */
 @layer base {
-  html, body, #__next {
+  html,
+  body,
+  #__next {
     height: 100%;
   }
 
@@ -53,9 +59,37 @@
 
   /* Material Symbols helper if you use the icon font */
   .material-symbols-outlined {
-    font-variation-settings: 'FILL' 0, 'wght' 400;
+    font-variation-settings:
+      "FILL" 0,
+      "wght" 400;
     font-family: "Material Symbols Outlined", var(--font-display);
   }
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #6750a4; /* your primary purple */
+    border-radius: 9999px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #7c63c9;
+  }
+
+  /* Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #6750a4 transparent;
+  }
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #8b74e6;
 }
 
 /* Keep any custom styles / helpers below */

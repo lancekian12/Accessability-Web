@@ -1,28 +1,6 @@
 "use client";
 
 import React from "react";
-import {
-  MapPin,
-  Satellite,
-  Layers,
-  Map,
-  Users,
-  EyeOff,
-  Building,
-  CheckCircle2,
-  Zap,
-  Headphones,
-  Accessibility,
-  BedDouble,
-  Utensils,
-  X,
-  Navigation,
-  Siren,
-  LocateFixed,
-  Bookmark,
-  ShieldCheck,
-  Mic,
-} from "lucide-react";
 import HeroSection from "./components/HeroSection";
 import PartnersSection from "./components/PartnerSection";
 import FeaturesSection from "./components/FeatureSection";
@@ -30,7 +8,6 @@ import CTASection from "./components/CTASection";
 
 
 const HeroLanding: React.FC = () => {
-  // small helper to speak card content (press-to-play audio)
   const speak = (title: string, text: string) => {
     if (typeof window === "undefined") return;
     const utter = new SpeechSynthesisUtterance(`${title}. ${text}`);
