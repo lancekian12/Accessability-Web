@@ -63,7 +63,7 @@ const Header: React.FC = () => {
           onClick={handleStartRoute}
           className="flex cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-6 bg-primary text-white text-sm font-bold shadow-md shadow-primary/20 hover:bg-primary/90 hover:shadow-lg transition-all border-b-2 border-primary/50 active:border-b-0 active:translate-y-[2px]"
         >
-          <span className="truncate">Start Route</span>
+          <span className="truncate">Download Now</span>
         </button>
 
         <div className="hidden sm:flex items-center gap-2">
