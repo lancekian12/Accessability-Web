@@ -23,13 +23,8 @@ import {
 /**
  * HeroSection (unchanged design)
  *
- * - The only changes are the two buttons:
- *   - "Download on iOS" -> downloads the repository ZIP (branch: main)
- *   - "Get for Android" -> attempts to download an APK from Releases, falls back to repo ZIP if APK not available
- *
- * Notes:
- * - Browser CORS may prevent a HEAD check from succeeding on some hosts. In that case, the code will fall back to the ZIP automatically.
- * - If you upload an APK as a release asset, name it `app.apk` (or change `apkUrl` below to the actual asset name).
+ * Android button now downloads the APK directly from:
+ * https://github.com/Montilla007/3Y2AAPWD/releases/latest/download/app-release.apk
  */
 
 const HeroSection: React.FC = () => {
@@ -41,8 +36,9 @@ const HeroSection: React.FC = () => {
   // Direct repo zip
   const repoZipUrl = `https://github.com/${owner}/${repo}/archive/refs/heads/${branch}.zip`;
 
-  // Release APK (expected release asset name: app.apk). Change if different.
-  const apkUrl = `https://github.com/${owner}/${repo}/releases/latest/download/app.apk`;
+  // Direct APK link (as you requested)
+  const apkUrl =
+    "https://github.com/Montilla007/3Y2AAPWD/releases/latest/download/app-release.apk";
 
   // Utility to trigger download/navigation
   const triggerDownload = (url: string, suggestedFilename?: string) => {
@@ -69,41 +65,10 @@ const HeroSection: React.FC = () => {
     }
   };
 
-  /**
-   * Android download flow:
-   * 1. Try to check if APK asset exists using a HEAD request.
-   *    - If HEAD succeeds (status 200), trigger download of APK.
-   *    - If HEAD fails (404, network error, CORS error), fall back to downloading repo ZIP.
-   *
-   * Note: HEAD may fail due to CORS; that's handled by the catch which falls back to ZIP.
-   */
-  const handleAndroid = async (e?: React.MouseEvent) => {
+  // Android: directly download the provided APK link
+  const handleAndroid = (e?: React.MouseEvent) => {
     if (e) e.preventDefault();
-
-    // Quick UX: try HEAD first to avoid downloading HTML pages by mistake.
-    try {
-      // Use fetch HEAD to check resource exists. This can throw due to CORS.
-      const resp = await fetch(apkUrl, {
-        method: "HEAD",
-        mode: "cors",
-        cache: "no-store",
-      });
-
-      // If status in 200..399, assume APK is available
-      if (resp.ok) {
-        // Trigger APK download
-        triggerDownload(apkUrl, `${repo}.apk`);
-        return;
-      } else {
-        // Not OK (404 etc.) -> fallback
-        triggerDownload(repoZipUrl, `${repo}.zip`);
-        return;
-      }
-    } catch (err) {
-      // Network/CORS/error -> fallback to repo zip
-      // (This is common when HEAD is blocked by CORS; fallback is safe)
-      triggerDownload(repoZipUrl, `${repo}.zip`);
-    }
+    triggerDownload(apkUrl, "app-release.apk");
   };
 
   // iOS: download the repo ZIP (iOS cannot install APKs)
@@ -169,7 +134,7 @@ const HeroSection: React.FC = () => {
                 Download on iOS
               </button>
 
-              {/* Android button: tries APK -> falls back to zip */}
+              {/* Android button: downloads the APK you provided */}
               <button
                 onClick={handleAndroid}
                 className="flex cursor-pointer items-center justify-center rounded-xl h-14 px-8 bg-white text-text-main border border-slate-200 text-base font-bold hover:bg-slate-50 transition-all hover:border-slate-300 shadow-map-card"
